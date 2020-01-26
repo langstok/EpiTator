@@ -16,6 +16,8 @@ WORKDIR /app
 
 COPY ./epitator/serve.py /app/epitator/serve.py
 
+# debug only
+RUN pip install flask
 
 ENV OPTIONAL_ARGS=''
 ENV PYTHONPATH "${PYTHONPATH}:/app"
