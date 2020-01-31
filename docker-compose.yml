@@ -1,7 +1,7 @@
 version: '2'
 services:
   epitator:
-    image: putssander/epitator:latest
+    image: langstok/epitator:latest
     build: .
     ports:
       - "8080:8080"
