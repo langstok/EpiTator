@@ -28,18 +28,22 @@ while True:
         data = json.loads(message.value.decode('utf-8'))
         text = data["json-nlp"]["documents"][0]["text"]
         logger.info("In text: %s", text)
-        doc = AnnoDoc(text=text)
-        doc.add_tiers(GeonameAnnotator())
-        annotations = doc.tiers["geonames"].spans
-        results = [get_geo_obj(annotation) for annotation in annotations]
-        logger.debug('Out results: %s', results)
+        try:
+            doc = AnnoDoc(text=text)
+            doc.add_tiers(GeonameAnnotator())
+            annotations = doc.tiers["geonames"].spans
+            logger.info("annotations %s", str(annotations))
+            results = []
+            for annotation in annotations:
+                results.append(get_geo_obj(annotation))
+            logger.info("results %s", str(results))
+            data['epitator'] = {
+                'geoname-annotator': results
+            }
+            logger.info("epitator %s", str(data['epitator']))
+        except Exception as e:
+            logger.error('error', e)
 
-        json_result = json.loads(json.dumps(results))
-        logger.debug('Out: %s', json_result)
-
-        data['epitator'] = {
-            'geoname-annotator': json_result
-        }
         producer.send(get_output_channel(), json.dumps(data).encode('utf-8'))
 
 
