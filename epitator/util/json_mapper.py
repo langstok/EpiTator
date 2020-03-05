@@ -1,5 +1,4 @@
 def get_geo_obj(annotation):
-    print('get json')
     geoname_json = {
         "name": annotation.geoname.name,
         "geonameid": annotation.geoname.geonameid,

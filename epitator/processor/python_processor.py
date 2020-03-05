@@ -44,6 +44,7 @@ while True:
         except Exception as e:
             logger.error('error', e)
 
-        producer.send(get_output_channel(), json.dumps(data).encode('utf-8'))
+        result_json = json.dumps(data)
+        producer.send(get_output_channel(), result_json.encode('utf-8'))
 
 
